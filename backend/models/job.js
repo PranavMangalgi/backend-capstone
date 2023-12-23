@@ -21,6 +21,7 @@ const jobPostSchema = mongoose.Schema({
   remote: { type: String, enum: ["Remote", "Office"], required: true },
   location: { type: String, required: true },
   companyInfo: { type: String, required: true },
+  jobDescription: { type: String, required: true },
   skills: { type: [String], required: true },
   information: { type: String, required: true },
   createdAt: { type: Date, immutable: true, default: Date.now },

@@ -35,7 +35,7 @@ function Register() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submitted!");
+    console.log("submitted! registration ");
     const { name, email, password, mobile } = state;
     if (!name || !email || !password || !mobile || !consent) {
       setError(true);

@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@mixin flex($direction: row, $align: stretch, $justify: center) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+body {
+  overflow:hidden;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  
+}
+
+.formContainer {
+  width: 55vw;
+  height: 100vh;
+  @include flex($direction: column, $justify: flex-start);
+  margin: 0.5rem 2rem;
+  h2 {
+    margin: 1rem 0;
+  }
+  form {
+    @include flex($direction: column, $align: flex-start);
+    gap: 0.85rem;
+    label {
+      font-size: 1.2rem;
+    }
+    input,
+    select {
+      margin-left: 1.5rem;
+      border: 1px solid #cecece;
+      color: #cecece;
+      border-radius: 3px;
+      &:focus {
+        color: #000;
+        outline: none;
+        border: 1px solid #cecece;
+      }
+      &:not(:focus) {
+        color: #000;
+      }
+    }
+    input {
+      width: 300px;
+      padding: 0.5rem;
+    }
+    .buttonDiv {
+      width: 100%;
+      // background-color: pink;
+      @include flex($justify: flex-end);
+      margin-top: 0.75rem;
+      padding-right: 2rem;
+      gap: 1rem;
+      button {
+        padding: 0.5rem;
+        @include flex();
+        outline: none;
+        border: none;
+        border: 1px solid #cecece;
+        color: #cecece;
+        background-color: #fff;
+        border-radius: 5px;
+        &:nth-of-type(2) {
+          background-color: #ed5353;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          padding: 0.5rem;
+        }
+      }
+    }
+    .error {
+      border: 1px solid rgb(224, 62, 62);
+      &::placeholder {
+        color: rgb(224, 62, 62);
+      }
+    }
+  }
+}
+.imageContainer {
+  width: 45vw;
+  height: 100vh;
+  background-image: url("../../assets/wallpaper.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}

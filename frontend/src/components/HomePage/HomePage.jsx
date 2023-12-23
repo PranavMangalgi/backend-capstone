@@ -11,7 +11,12 @@ function MainPage() {
     console.log(localStorage.getItem("token"));
   }, []);
 
-  return <>{name}</>;
+  return (
+    <>
+    <div>{name}</div>
+    <div>{localStorage.getItem('token')}</div>
+    </>
+  )
 }
 
 export default MainPage;

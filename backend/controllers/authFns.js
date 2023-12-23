@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
@@ -6,11 +5,10 @@ const User = require("../models/user");
 const handleRegister = async (req, res, next) => {
   try {
     const { name, email, password, mobile } = req.body;
-    const exists = await User.findOne({ email });
-    if (exists) {
-      return res
-        .status(409)
-        .json({ status: "ERROR", message: "user already exists" });
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      res.status(409).json({ status: "ERROR", message: "user already exists" });
+      return;
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10);
@@ -23,10 +21,21 @@ const handleRegister = async (req, res, next) => {
 
     await newUser.save();
 
+    const token = jwt.sign(newUser.toJSON(), process.env.JWT_KEY, {
+      expiresIn: "10d",
+    });
+
     res
       .status(201)
-      .json({ status: "SUCCESS", message: "Registered user successfully!" });
+      .json({
+        status: "SUCCESS",
+        token,
+        recruiterName: newUser.name,
+        message: "Registered user successfully!",
+      });
   } catch (e) {
+    console.error("Error during registration:", e.response?.data || e.message);
+    console.log("Full response:", e.response);
     next(e);
   }
 };
@@ -46,14 +55,25 @@ const handleLogin = async (req, res, next) => {
     if (!passwordBool) {
       return res
         .status(401)
-        .json({ status: "FAILED", message: "incorrect Password" });
+        .json({
+          status: "FAILED",
+          token,
+          recruiterName: user.name,
+          message: "incorrect Password",
+        });
     }
     const token = jwt.sign(user.toJSON(), process.env.JWT_KEY, {
       expiresIn: "10d",
     });
-    res.status(200).json({ status: "SUCCESS", message: "Logged In!", token });
+    res.status(200).json({
+      status: "SUCCESS",
+      message: "Logged In!",
+      token,
+      recruiterName: user.name,
+    });
   } catch (e) {
     next(e);
   }
 };
+
 module.exports = { handleRegister, handleLogin };
