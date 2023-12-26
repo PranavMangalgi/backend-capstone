@@ -14,12 +14,11 @@
 body {
   background-color: #ffefef;
   min-height: 100vh;
-  overflow-y: scroll;
 }
 
 .container {
   position: relative;
-
+  overflow-y: scroll;
   @include flex($direction: column);
   nav {
     color: #fff;
