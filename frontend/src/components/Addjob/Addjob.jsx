@@ -105,7 +105,7 @@ function Addjob() {
         } else {
           const response = await axios.post(
             "https://jobfinder-0qep.onrender.com/jobs/jobposting",
-            state,
+            {...state, skills: state.skills.toString().toLowerCase() },
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -310,7 +310,7 @@ function Addjob() {
             <button
               onClick={() => {
                 dispatch({ type: "reset" });
-                navigate(-1); //may have to change here
+                navigate(-1); 
               }}
             >
               Cancel
