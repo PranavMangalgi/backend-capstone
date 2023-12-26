@@ -14,7 +14,7 @@ function ViewJob() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/jobs/${id}`, {
+        const response = await axios.get(`https://jobfinder-0qep.onrender.com/jobs/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

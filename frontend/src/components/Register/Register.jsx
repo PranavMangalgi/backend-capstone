@@ -44,7 +44,7 @@ function Register() {
       setExists(false);
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/register",
+          "https://jobfinder-0qep.onrender.com/api/register",
           state
         );
 

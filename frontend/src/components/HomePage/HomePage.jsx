@@ -21,12 +21,12 @@ function MainPage() {
       try {
         if (selectedSkills.length > 0) {
           const response = await axios.get(
-            `http://localhost:4000/jobs/filter/${selectedSkills.toString()}`,
+            `https://jobfinder-0qep.onrender.com/jobs/filter/${selectedSkills.toString()}`,
             
           );
           setJobs(response.data.message);
         } else {
-          const response = await axios.get("http://localhost:4000/jobs/");
+          const response = await axios.get("https://jobfinder-0qep.onrender.com/jobs/");
           setJobs(response.data.message);
         }
       } catch (e) {
@@ -156,10 +156,10 @@ function MainPage() {
         </div>
         <div className={styles.jobs}>
           {jobs &&
-            jobs.map((job) => {
+            jobs.map((job,idx) => {
               return (
                 <>
-                  <div className={styles.job}>
+                  <div className={styles.job} key={idx}>
                     <div className={styles.jobContent}>
                       <div>
                         <img

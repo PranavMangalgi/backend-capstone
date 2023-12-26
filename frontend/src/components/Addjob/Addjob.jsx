@@ -40,7 +40,7 @@ function Addjob() {
     if (id) {
       (async () => {
         try {
-          const response = await axios.get(`http://localhost:4000/jobs/${id}`, {
+          const response = await axios.get(`https://jobfinder-0qep.onrender.com/jobs/${id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -91,7 +91,7 @@ function Addjob() {
       try {
         if (id) {
           const response = await axios.patch(
-            `http://localhost:4000/jobs/${id}`,
+            `https://jobfinder-0qep.onrender.com/jobs/${id}`,
             { ...state, skills: state.skills.toString().toLowerCase() },
             {
               headers: {
@@ -104,7 +104,7 @@ function Addjob() {
           }
         } else {
           const response = await axios.post(
-            "http://localhost:4000/jobs/jobposting",
+            "https://jobfinder-0qep.onrender.com/jobs/jobposting",
             state,
             {
               headers: {
