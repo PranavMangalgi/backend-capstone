@@ -8,7 +8,11 @@ const {
   updateJobPosting,
   filterJobs,
   getJobPosting,
+  getAllJobs,
 } = require("../controllers/jobsFns");
+
+//gets all the jobs
+router.get("/", getAllJobs);
 
 //creates a job posting
 router.post("/jobposting", requireAuth, createJobPosting);
@@ -20,6 +24,6 @@ router
   .patch(requireAuth, updateJobPosting);
 
 //filter jobs based on skills
-router.get("/", requireAuth, filterJobs);
+router.get("/filter/:skills", filterJobs);
 
 module.exports = router;

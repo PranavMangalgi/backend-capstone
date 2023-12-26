@@ -112,12 +112,11 @@ const getJobPosting = async (req, res, next) => {
 
 const filterJobs = async (req, res, next) => {
   try {
-    const { skills } = req.body;
+    const { skills } = req.params;
     let skillsCopy = [];
     if (typeof skills === "string") {
       skillsCopy = skills.split(",").map((skill) => skill.trim());
     }
-
     const jobs = await Job.find({ skills: { $in: skillsCopy } });
     if (jobs) {
       res.status(200).json({ status: "success", message: jobs });
@@ -129,9 +128,22 @@ const filterJobs = async (req, res, next) => {
   }
 };
 
+const getAllJobs = async (req, res, next) => {
+  try {
+    const jobs = await Job.find({});
+    if (!jobs) {
+      res.json({ status: "ERROR", message: "no jobs in db" });
+    }
+    res.status(200).json({ status: "SUCCESS", message: jobs });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   updateJobPosting,
   createJobPosting,
   filterJobs,
   getJobPosting,
+  getAllJobs,
 };

@@ -17,8 +17,6 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-
     if (!form.email || !form.password) {
       setError(true);
     } else {
@@ -30,25 +28,21 @@ function Login() {
           "http://localhost:4000/api/login",
           form
         );
-        console.log(response.status);
+
         if (response.status === 200) {
-          console.log(response.data)
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("recruiterName", response.data.recruiterName);
-          navigate('/')
+          navigate("/");
         }
       } catch (e) {
-        if (e?.response.status === 401) {
+        if (e.response.status === 401 || e.response.status === 500) {
           console.log("incorrect password");
           setIncorrect(true);
         }
-        if (e?.response.status === 404) {
-          console.log("user does not exists");
-          document.querySelector("#email").classList.add(styles.error);
+        if (e.response.status === 404) {
           setExists(true);
         }
       }
-      console.log(form);
     }
   };
   return (

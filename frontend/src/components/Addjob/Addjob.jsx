@@ -45,7 +45,7 @@ function Addjob() {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           });
-          console.log(response.data.message);
+
           const jobData = response.data.message;
 
           dispatch({ type: "update state", payload: jobData });
@@ -56,14 +56,8 @@ function Addjob() {
     }
   }, [id]);
 
-  useEffect(() => {
-    console.log("initialstate;", initialState);
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submitted! job");
-    // code
     const {
       companyName,
       logo,
@@ -93,23 +87,20 @@ function Addjob() {
       setError(true);
     } else {
       setError(false);
-
+      const token = localStorage.getItem("token");
       try {
         if (id) {
           const response = await axios.patch(
             `http://localhost:4000/jobs/${id}`,
-            {...state, skills:state.skills.toString()},
+            { ...state, skills: state.skills.toString().toLowerCase() },
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           );
           if (response.status == 200) {
-            console.log(" job updated!");
-
             navigate(`/job/${id}`);
-            // navigate(-1);
           }
         } else {
           const response = await axios.post(
@@ -123,7 +114,6 @@ function Addjob() {
             }
           );
           if (response.status == 201) {
-            console.log(" job created!");
             dispatch({ type: "reset" });
             navigate("/");
           }
@@ -134,9 +124,6 @@ function Addjob() {
     }
   };
 
-  useEffect(() => {
-    console.log(state.skills);
-  }, [state.skills]);
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
@@ -337,7 +324,9 @@ function Addjob() {
           </div>
         </form>
       </div>
-      <div className={styles.imageContainer}></div>
+      <div className={styles.imageContainer}>
+        <h2>Recruiter add job details here</h2>
+      </div>
     </div>
   );
 }

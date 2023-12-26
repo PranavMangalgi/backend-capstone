@@ -20,7 +20,6 @@ function ViewJob() {
           },
         });
         setJob(response.data.message);
-        console.log(response.data.message);
       } catch (e) {
         console.error(e);
       }
@@ -36,13 +35,24 @@ function ViewJob() {
       const timeDifference = Math.abs(
         isoDate.getTime() - currentDate.getTime()
       );
-      const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
 
-      if (daysDifference % 7 === 0) {
-        const weeks = daysDifference / 7;
-        return `${weeks} ${weeks === 1 ? "week" : "weeks"}`;
-      } else {
+      const hoursDifference = Math.floor(timeDifference / (1000 * 3600));
+      const minutesDifference = Math.floor(
+        (timeDifference % (1000 * 3600)) / (1000 * 60)
+      );
+      const secondsDifference = Math.floor(
+        (timeDifference % (1000 * 60)) / 1000
+      );
+
+      if (hoursDifference >= 24) {
+        const daysDifference = Math.floor(hoursDifference / 24);
         return `${daysDifference} ${daysDifference === 1 ? "day" : "days"}`;
+      } else if (hoursDifference > 0) {
+        return `${hoursDifference}h`;
+      } else if (minutesDifference > 0) {
+        return `${minutesDifference}m`;
+      } else {
+        return `${secondsDifference}s`;
       }
     }
   }
@@ -52,11 +62,21 @@ function ViewJob() {
   return (
     <div className={styles.container}>
       <nav>
-        <div>Jobfinder</div>
+        <div onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+          Jobfinder
+        </div>
         <div className={styles.navBtns}>
           {auth ? (
             <div className={styles.loggedIn}>
-              <p>Logout</p>
+              <p
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("recruiterName");
+                  navigate("/");
+                }}
+              >
+                Logout
+              </p>
               <div>
                 Hello {localStorage.getItem("recruiterName")}
                 <img src={recruiterImg} alt="no-image" />
@@ -64,8 +84,18 @@ function ViewJob() {
             </div>
           ) : (
             <>
-              <button className={styles.loginBtn}>Login</button>
-              <button className={styles.registerBtn}>Register</button>
+              <button
+                className={styles.loginBtn}
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+              <button
+                className={styles.registerBtn}
+                onClick={() => navigate("/register")}
+              >
+                Register
+              </button>
             </>
           )}
         </div>
@@ -114,24 +144,9 @@ function ViewJob() {
           <h3>About company</h3>
           <p>{job.companyInfo}</p>
           <h3>About the job/internship</h3>
-          <p>
-            {job.jobDescription} Lorem ipsum dolor sit amet consectetur,
-            adipisicing elit. Dicta, impedit at! Eaque dolor soluta est eius
-            facilis nemo, consequuntur nihil maxime libero quidem recusandae,
-            provident labore excepturi assumenda cupiditate perferendis
-            distinctio perspiciatis ducimus. Incidunt libero minus dolor
-            corporis fugit eos voluptatum ipsa amet quam provident modi, veniam,
-            architecto consequatur facilis cupiditate nemo adipisci quaerat.
-            Facere doloremque, consequatur totam consequuntur, culpa magni
-            assumenda voluptates laboriosam unde dicta, veritatis sequi animi!
-            Quia dolor incidunt, rem voluptatibus quod fuga temporibus quis quos
-            ea ex cum eligendi ipsa voluptatem debitis blanditiis dignissimos
-            sapiente ut doloribus? Magnam optio sit ea similique harum ullam
-            numquam cupiditate.
-          </p>
+          <p>{job.jobDescription}</p>
           <h3>Skill(s) required</h3>
           <div className={styles.skills}>
-            {console.log(job.skills)}
             {job.skills?.map((skill) => (
               <div key={skill} className={styles.skill}>
                 {skill}

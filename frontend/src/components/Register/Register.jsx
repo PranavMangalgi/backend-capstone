@@ -35,7 +35,7 @@ function Register() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submitted! registration ");
+    
     const { name, email, password, mobile } = state;
     if (!name || !email || !password || !mobile || !consent) {
       setError(true);
@@ -48,7 +48,7 @@ function Register() {
           state
         );
 
-        console.log("response.status:", response);
+        
         if (response.status === 201) {
           console.log("User created successfully!");
           localStorage.setItem("token", response.data.token);
