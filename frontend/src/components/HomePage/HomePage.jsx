@@ -22,7 +22,6 @@ function MainPage() {
         if (selectedSkills.length > 0) {
           const response = await axios.get(
             `https://jobfinder-0qep.onrender.com/jobs/filter/${selectedSkills.toString()}`,
-            
           );
           setJobs(response.data.message);
         } else {

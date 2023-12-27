@@ -20,7 +20,7 @@ router.post("/jobposting", requireAuth, createJobPosting);
 // get and updates a job posting
 router
   .route("/:id")
-  .get(requireAuth, getJobPosting)
+  .get(getJobPosting)
   .patch(requireAuth, updateJobPosting);
 
 //filter jobs based on skills
