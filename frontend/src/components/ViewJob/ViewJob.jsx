@@ -15,12 +15,7 @@ function ViewJob() {
     (async () => {
       try {
         const response = await axios.get(
-          `https://jobfinder-0qep.onrender.com/jobs/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
+          `https://jobfinder-0qep.onrender.com/jobs/${id}`
         );
         setJob(response.data.message);
       } catch (e) {
