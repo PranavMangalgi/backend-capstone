@@ -205,12 +205,12 @@ function MainPage() {
                         })}
                       </div>
                       <div className={styles.jobBtns}>
-                        <button
+                        {auth&&<button
                           className={styles.editBtn}
                           onClick={() => navigate(`/addjob/${job._id}`)}
                         >
                           Edit job
-                        </button>
+                        </button>}
                         <button
                           className={styles.viewBtn}
                           onClick={() => navigate(`/job/${job._id}`)}

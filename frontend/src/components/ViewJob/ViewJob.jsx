@@ -17,6 +17,7 @@ function ViewJob() {
         const response = await axios.get(
           `https://jobfinder-0qep.onrender.com/jobs/${id}`
         );
+        console.log(response.data.message);
         setJob(response.data.message);
       } catch (e) {
         console.error(e);
